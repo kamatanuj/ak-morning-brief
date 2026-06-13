@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>AK Morning Brief - June 12, 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+      color: #eee; 
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .header { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      padding: 30px; 
+      border-radius: 15px; 
+      margin-bottom: 20px;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    }
+    .header h1 { font-size: 32px; margin-bottom: 10px; }
+    .header p { opacity: 0.8; font-size: 14px; }
+    .archive-btn {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 15px;
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+    }
+    .archive-btn:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: white;
+      transform: translateY(-2px);
+    }
+    .live-badge {
+      display: inline-block;
+      background: #e74c3c;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 15px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .update-time {
+      background: rgba(255,255,255,0.1);
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    .section-card {
+      background: #16213e;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-left: 5px solid;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    .section-ai { border-color: #e74c3c; }
+    .section-tech { border-color: #3498db; }
+    .section-stocks { border-color: #2ecc71; }
+    .section-india { border-color: #f39c12; }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .section-icon {
+      font-size: 28px;
+      margin-right: 15px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    .news-item {
+      background: rgba(255,255,255,0.05);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 3px solid #2196F3;
+    }
+    .news-title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .news-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .news-source {
+      font-size: 12px;
+      color: #667eea;
+      font-weight: 500;
+    }
+    .news-date {
+      font-size: 12px;
+      color: #aaa;
+    }
+    .news-link {
+      font-size: 12px;
+      color: #2ecc71;
+      text-decoration: none;
+      background: rgba(46, 204, 113, 0.1);
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+    .news-summary {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.5;
+    }
+    
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 15px 0;
+    }
+    .stock-card {
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid #2ecc71;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stock-name {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+    .stock-price {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+    .stock-change {
+      font-size: 14px;
+      color: #2ecc71;
+      margin-top: 5px;
+    }
+    .stock-down {
+      background: rgba(231, 76, 60, 0.1);
+      border-color: #e74c3c;
+    }
+    .stock-down .stock-price,
+    .stock-down .stock-change {
+      color: #e74c3c;
+    }
+    
+    .rate-alert {
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.2) 0%, rgba(192, 57, 43, 0.2) 100%);
+      border: 1px solid #e74c3c;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .rate-alert-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #e74c3c;
+    }
+    .rate-value {
+      font-size: 48px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    .rate-change {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .rate-up { color: #2ecc71; }
+    .rate-down { color: #e74c3c; }
+    
+    .india-list {
+      list-style: none;
+    }
+    .india-list li {
+      padding: 12px;
+      margin: 8px 0;
+      background: rgba(243, 156, 18, 0.1);
+      border-left: 3px solid #f39c12;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .india-usd {
+      text-align: center;
+      padding: 15px;
+      background: rgba(243, 156, 18, 0.1);
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .india-usd .label {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+    .india-usd .value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #f39c12;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🌅 AK Morning Brief <span class="live-badge">● LIVE</span></h1>
+    <p>Daily Briefing for A.K. | AI, Technology, Indian Stocks & Global Markets</p>
+    <a href="/archive/" class="archive-btn">📚 View Archives</a>
+  </div>
+
+  <div class="update-time">
+    📅 <strong>Date:</strong> June 12, 2026 (Friday) | 🕐 <strong>Last Updated:</strong> 02:11 PM IST
+  </div>
+
+  <!-- Market Alert Section -->
+  <div class="rate-alert">
+    <div class="rate-alert-title">📊 Today's Market Highlights (June 12, 2026)</div>
+    <div style="font-size: 14px; opacity: 0.9;">
+      💰 Hexagon Nutrition IPO Allotment Today | 📈 Akums Drugs +6.71% | 🏦 Nuvama gets SEBI nod for MF business
+    </div>
+  </div>
+  <div class="section-card section-ai">
+    <div class="section-header"><span class="section-icon">🤖</span><span class="section-title">AI Developments</span></div>
+    <div class="news-item">
+      <div class="news-title">Claude Fable is relentlessly proactive</div>
+      <div class="news-meta">
+        <span class="news-source">simonwillison.net</span>
+        <span class="news-date">June 11, 2026</span>
+        <a href="https://simonwillison.net/2026/Jun/11/fable-is-relentlessly-proactive/" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Simon Willison explores how Claude Fable takes initiative and acts proactively, marking a shift in AI assistant capabilities.</div>
+    </div>
+    <div class="news-item">
+      <div class="news-title">Homebrew 6.0.0 released</div>
+      <div class="news-meta">
+        <span class="news-source">brew.sh</span>
+        <span class="news-date">June 11, 2026</span>
+        <a href="https://brew.sh/2026/06/11/homebrew-6.0.0/" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Major release of the macOS package manager with significant improvements and new features.</div>
+    </div>
+  </div>
+  <div class="section-card section-tech">
+    <div class="section-header"><span class="section-icon">💻</span><span class="section-title">Technology News</span></div>
+    <div class="news-item">
+      <div class="news-title">Waymo Premier announced</div>
+      <div class="news-meta">
+        <span class="news-source">waymo.com</span>
+        <span class="news-date">June 11, 2026</span>
+        <a href="https://waymo.com/blog/2026/06/waymo-premier/" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Waymo launches Premier service with premium autonomous ride-hailing experience.</div>
+    </div>
+    <div class="news-item">
+      <div class="news-title">Software is made between commits - DeltaDB by Zed</div>
+      <div class="news-meta">
+        <span class="news-source">zed.dev</span>
+        <span class="news-date">June 11, 2026</span>
+        <a href="https://zed.dev/blog/introducing-deltadb" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Zed introduces DeltaDB, a new approach to version control focused on the evolution between commits.</div>
+    </div>
+  </div>
+  <div class="section-card section-stocks">
+    <div class="section-header"><span class="section-icon">📈</span><span class="section-title">Indian Stock Markets - Top Gainers</span></div>
+    <div class="stock-grid">
+      <div class="stock-card">
+        <div class="stock-name">Akums Drugs</div>
+        <div class="stock-price">₹892.50</div>
+        <div class="stock-change">+6.71%</div>
+      </div>
+      <div class="stock-card">
+        <div class="stock-name">Nuvama</div>
+        <div class="stock-price">₹1,245.30</div>
+        <div class="stock-change">+4.28%</div>
+      </div>
+      <div class="stock-card">
+        <div class="stock-name">Tata Motors</div>
+        <div class="stock-price">₹892.15</div>
+        <div class="stock-change">+3.45%</div>
+      </div>
+      <div class="stock-card">
+        <div class="stock-name">Infosys</div>
+        <div class="stock-price">₹1,891.60</div>
+        <div class="stock-change">+2.18%</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card section-stocks">
+    <div class="section-header"><span class="section-icon">📊</span><span class="section-title">Market News</span></div>
+    <div class="news-item">
+      <div class="news-title">Hexagon Nutrition IPO Allotment Today</div>
+      <div class="news-meta">
+        <span class="news-source">MoneyControl</span>
+        <span class="news-date">June 12, 2026</span>
+        <a href="https://www.moneycontrol.com/ipo/" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Hexagon Nutrition IPO allotment status to be announced today. Check your application status online.</div>
+    </div>
+    <div class="news-item">
+      <div class="news-title">Nuvama gets SEBI nod for mutual fund business</div>
+      <div class="news-meta">
+        <span class="news-source">Economic Times</span>
+        <span class="news-date">June 11, 2026</span>
+        <a href="https://economictimes.indiatimes.com/markets/" class="news-link" target="_blank">🔗 Read Article</a>
+      </div>
+      <div class="news-summary">Nuvama Wealth receives SEBI approval to launch mutual fund business, stock rallies 4%.</div>
+    </div>
+  </div>
+  <div class="section-card section-india">
+    <div class="section-header"><span class="section-icon">🇮🇳</span><span class="section-title">India & Global Markets</span></div>
+    <ul class="india-list">
+      <li>🇮🇳 NIFTY 50 trading at 23,392.25 (+0.8%)</li>
+      <li>🇮🇳 Rupee weakens to ₹95.68 per USD</li>
+      <li>🇮🇳 Bitcoin trades at $63,367 (+2.3%)</li>
+      <li>🇮🇳 Akums Drugs surges 6.71% on strong Q4 results</li>
+      <li>🇮🇳 Nuvama rallies 4.28% on SEBI MF approval</li>
+    </ul>
+    <div class="india-usd">
+      <div class="label">USD/INR Exchange Rate</div>
+      <div class="value">₹95.68</div>
+      <div style="font-size: 14px; color: #aaa; margin-top: 5px;">+0.51 from yesterday</div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Daily briefing for A.K. | Generated at 02:11 PM IST IST</p>
+    <p><a href="/ak-brief.html">Open Dashboard</a> | <a href="/archive/">View Archives</a> | Emails sent to kamatanuj@gmail.com</p>
+  </div>
+</body>
+</html>
